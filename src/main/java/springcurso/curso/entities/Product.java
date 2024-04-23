@@ -1,5 +1,6 @@
 package springcurso.curso.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import springcurso.curso.entities.pk.OrderItemPk;
 
@@ -87,6 +88,7 @@ public class Product implements Serializable {
         return categories;
     }
 
+@JsonIgnore
     public Set<Order> getOrders() {
         Set<Order> orders = new HashSet<Order>();
         for (OrderItem item : items) {
