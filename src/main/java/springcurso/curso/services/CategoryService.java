@@ -21,8 +21,8 @@ public class CategoryService {
         return repository.findAll();
     }
     public Category findById(Long id) {
-        Optional<Category> order = repository.findById(id);
-        return order.get();
+        Optional<Category> product = repository.findById(id);
+        return product.get();
     }
 
 }

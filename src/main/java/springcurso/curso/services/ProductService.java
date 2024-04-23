@@ -3,26 +3,25 @@ package springcurso.curso.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springcurso.curso.entities.Category;
-import springcurso.curso.entities.Order;
+import springcurso.curso.entities.Product;
 import springcurso.curso.repositories.CategoryRepository;
-import springcurso.curso.repositories.OrderRepository;
+import springcurso.curso.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class ProductService {
 
     @Autowired
-    private CategoryRepository repository;
+    private ProductRepository repository;
 
-
-    public List<Category> findAll() {
+    public List<Product> findAll() {
         return repository.findAll();
     }
-    public Category findById(Long id) {
-        Optional<Category> order = repository.findById(id);
-        return order.get();
+    public Product findById(Long id) {
+        Optional<Product> product = repository.findById(id);
+        return product.get();
     }
 
 }

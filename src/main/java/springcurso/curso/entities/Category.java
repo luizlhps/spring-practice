@@ -1,13 +1,13 @@
 package springcurso.curso.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Category implements Serializable {
@@ -19,6 +19,9 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 
     public Category (){}
     public Category(Long id, String name) {
@@ -55,6 +58,9 @@ public class Category implements Serializable {
         return Objects.hash(id);
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
     @Override
     public String toString() {
         return "Category{" +
@@ -62,4 +68,5 @@ public class Category implements Serializable {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }
