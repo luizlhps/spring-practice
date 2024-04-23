@@ -1,7 +1,10 @@
 package springcurso.curso.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Entity
 @Table(name = "users")
@@ -16,6 +19,10 @@ public class User {
     private String password;
     private String phone;
 
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<Order>();
+
     public User() {}
     public User(Long id, String name, String email, String password, String phone) {
         this.id = id;
@@ -23,6 +30,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.phone = phone;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public Long getId() {
