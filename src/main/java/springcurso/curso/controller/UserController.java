@@ -1,11 +1,14 @@
 package springcurso.curso.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import springcurso.curso.entities.User;
 import springcurso.curso.services.UserService;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -25,6 +28,13 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable Long id) {
         User user = service.findById(id);
         return ResponseEntity.ok().body(user);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> insert(@RequestBody User user) {
+        User newUser = service.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(newUser);
     }
 
 
