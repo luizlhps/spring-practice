@@ -3,15 +3,9 @@ package springcurso.curso.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import springcurso.curso.entities.Category;
-import springcurso.curso.entities.Order;
-import springcurso.curso.entities.Product;
-import springcurso.curso.entities.User;
+import springcurso.curso.entities.*;
 import springcurso.curso.entities.enums.OrderStatus;
-import springcurso.curso.repositories.CategoryRepository;
-import springcurso.curso.repositories.OrderRepository;
-import springcurso.curso.repositories.ProductRepository;
-import springcurso.curso.repositories.UserRepository;
+import springcurso.curso.repositories.*;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -30,6 +24,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -63,5 +60,16 @@ public class TestConfig implements CommandLineRunner {
     p5.getCategories().add(c1);
 
     productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o2, p5, 2, p5.getPrice());
+
+    orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
     }
+
+
+
 }
