@@ -1,5 +1,6 @@
 package springcurso.curso.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,17 +45,23 @@ public class UserService {
     }
 
     public User update(Long id,User data) {
-        if (!repository.existsById(id)) {
+        try {
+
+            User userEntity = repository.getReferenceById(id);
+
+            userEntity.setName(data.getName());
+            userEntity.setEmail(data.getEmail());
+            userEntity.setPassword(data.getPassword());
+            userEntity.setPhone(data.getPhone());
+
+            return repository.save(userEntity);
+        }
+        catch (EntityNotFoundException e) {
             throw new ResourceNotFound(id);
         }
-
-        User userEntity = repository.getReferenceById(id);
-
-        userEntity.setName(data.getName());
-        userEntity.setEmail(data.getEmail());
-        userEntity.setPassword(data.getPassword());
-        userEntity.setPhone(data.getPhone());
-
-        return repository.save(userEntity);
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new DatabaseException(e.getMessage());
+        }
     }
 }
